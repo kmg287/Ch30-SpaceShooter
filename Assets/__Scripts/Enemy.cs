@@ -10,6 +10,13 @@ public class Enemy : MonoBehaviour
     public float health = 10;
     public int score = 100;      // Points earned for destroying this
                                  // This is a Property: A method that acts like a field
+    private BoundsCheck bndCheck;
+
+    private void Awake()
+    {
+        bndCheck = GetComponent<BoundsCheck>();
+    }
+
     public Vector3 pos
     {                                                     // a
         get
@@ -21,10 +28,17 @@ public class Enemy : MonoBehaviour
             this.transform.position = value;
         }
     }
+
     void Update()
     {
         Move();
+
+        if(bndCheck != null && bndCheck.offDown)
+        {
+                Destroy(gameObject);
+        }
     }
+
     public virtual void Move()
     {                                             // b
         Vector3 tempPos = pos;
